@@ -45,7 +45,8 @@ app.add_middleware(
 )
 
 # ─── Static Files ───
-STATIC_DIR = Path(__file__).parent / "static"
+
+STATIC_DIR = Path(__file__).parent
 
 
 # ─── Models ───
