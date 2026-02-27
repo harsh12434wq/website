@@ -1,0 +1,1832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#0B0F1A" />
+  <title>DSS Group – Security, Manpower & Facility Solutions | Nashik</title>
+  <meta name="description" content="Trusted provider of security personnel, manpower supply, housekeeping, and fabrication services in Nashik, Mumbai, Pune. 70+ clients. 1000+ trained staff." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+  /* ═══════════════════════════════════════
+     ROOT VARIABLES
+  ═══════════════════════════════════════ */
+:root {
+  --gold:        #F0B429;
+  --gold-light:  #FFD166;
+  --gold-dark:   #C08600;
+
+  --dark:        #0B0F1A;
+  --dark-2:      #141928;
+  --dark-3:      #1C2235;
+  --dark-4:      #1E2840;
+
+  --white:       #FFFFFF;
+
+  /* 🔵 Original Light Security Blue Palette */
+  --light:       #EDF2FB;
+  --light-2:     #E2EAF8;
+  --blue-card:   #F4F7FE;
+  --blue-mid:    #D6E4F7;
+
+  --border-dark: rgba(255,255,255,0.08);
+  --border-light:rgba(37,99,235,0.12);
+
+  --text-dark:   #0B1220;
+  --text-body:   #354060;
+  --text-muted:  #6B7BA4;
+
+  --nav-h:       68px;
+
+  --shadow-card: 0 4px 24px rgba(37,99,235,0.07);
+  --shadow-hover:0 16px 48px rgba(37,99,235,0.13);
+}
+
+
+
+  /* ═══════════════════════════════════════
+     RESET
+  ═══════════════════════════════════════ */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--light);
+    color: var(--text-body);
+    overflow-x: hidden;
+  }
+  a { text-decoration: none; color: inherit; }
+  ul { list-style: none; }
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: var(--dark-2); }
+  ::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 4px; }
+
+  /* ═══════════════════════════════════════
+     PAGE ROUTING
+  ═══════════════════════════════════════ */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ═══════════════════════════════════════
+     NAVIGATION — always dark, always white text
+  ═══════════════════════════════════════ */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    height: var(--nav-h);
+    display: flex; align-items: center;
+    padding: 0 5%;
+    padding-left: max(5%, env(safe-area-inset-left));
+    padding-right: max(5%, env(safe-area-inset-right));
+    justify-content: space-between;
+    transition: background 0.35s, box-shadow 0.35s, backdrop-filter 0.35s;
+    background: transparent;
+    -webkit-tap-highlight-color: transparent;
+  }
+  /* Once user scrolls any page → solid dark pill */
+  nav.scrolled {
+    background: rgba(14,16,24,0.96);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.06), 0 6px 28px rgba(0,0,0,0.4);
+    backdrop-filter: blur(18px);
+  }
+  /* On non-home pages the page starts with a dark hero, so nav
+     needs a solid bg right away (no scroll needed) */
+  nav.page-solid {
+    background: rgba(14,16,24,0.96);
+    backdrop-filter: blur(18px);
+  }
+
+  .nav-logo { display:flex; align-items:center; gap:12px; cursor:pointer; }
+  .logo-hex {
+    width: 40px; height: 44px;
+    background: var(--gold);
+    clip-path: polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
+    display: flex; align-items:center; justify-content:center;
+    flex-shrink: 0;
+  }
+  .logo-hex svg { width: 20px; height: 20px; }
+  .logo-text-wrap { line-height: 1.1; }
+  .logo-text-wrap .lg-main {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.35rem; letter-spacing: 0.06em;
+    color: var(--white); /* always white */
+  }
+  .logo-text-wrap .lg-sub {
+    font-size: 0.62rem; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--gold);
+  }
+
+  /* ALL nav links always white */
+  .nav-links { display:flex; align-items:center; gap:4px; }
+  .nav-links button {
+    background: none; border: none; cursor: pointer;
+    font-family: 'Outfit', sans-serif; font-size: 0.9rem; font-weight: 500;
+    padding: 8px 14px; border-radius: 6px;
+    transition: background 0.2s, color 0.2s;
+    color: rgba(255,255,255,0.65);
+  }
+  .nav-links button:hover { color: var(--white); background: rgba(255,255,255,0.07); }
+  .nav-links button.active { color: var(--white); background: rgba(255,255,255,0.1); }
+
+  .nav-cta-btn {
+    background: var(--gold) !important;
+    color: var(--dark) !important;
+    font-weight: 700 !important;
+    padding: 9px 22px !important;
+    border-radius: 8px !important;
+    transition: transform 0.15s, box-shadow 0.2s !important;
+    box-shadow: 0 4px 16px rgba(240,180,41,0.3);
+  }
+  .nav-cta-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 28px rgba(240,180,41,0.45) !important; }
+
+  /* Hamburger button → X animation */
+  .hamburger {
+    display:none; flex-direction:column; gap:5px; cursor:pointer;
+    padding:8px; margin:-8px;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .hamburger span {
+    width:24px; height:2px; border-radius:2px; background:var(--white);
+    transition: transform 0.3s ease, opacity 0.2s ease; display:block;
+  }
+  .hamburger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.is-open span:nth-child(2) { opacity:0; transform:scaleX(0); }
+  .hamburger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .mobile-menu {
+    display:none; position:fixed; top:var(--nav-h); left:0; right:0; z-index:999;
+    background: rgba(11,15,26,0.97);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    padding:12px 16px; padding-bottom:max(16px, env(safe-area-inset-bottom));
+    border-bottom: 1px solid var(--border-dark);
+    flex-direction:column; gap:4px;
+  }
+  .mobile-menu.open { display:flex; animation: slideDown 0.22s ease; }
+  @keyframes slideDown { from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:none;} }
+  .mobile-menu button {
+    background:none; border:none; cursor:pointer;
+    font-family:'Outfit',sans-serif; font-size:1rem; font-weight:500;
+    color: rgba(255,255,255,0.8); padding:14px 16px; border-radius:8px; text-align:left;
+    transition:background 0.2s, color 0.2s; min-height:50px;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .mobile-menu button:active { background:rgba(240,180,41,0.12); color:var(--gold); }
+  .mobile-menu .mob-cta {
+    background:var(--gold)!important; color:var(--dark)!important;
+    font-weight:700!important; text-align:center!important; margin-top:8px;
+  }
+
+  /* ═══════════════════════════════════════
+     SHARED COMPONENTS
+  ═══════════════════════════════════════ */
+  .section { padding: 96px 5%; }
+  .section-inner { max-width: 1200px; margin: 0 auto; }
+
+  /* Light sections — security blue tint */
+  .bg-white  { background: var(--blue-card); }
+  .bg-light  { background: var(--light); }
+  .bg-light2 { background: var(--light-2); }
+  /* Dark sections */
+  .bg-dark   { background: var(--dark); }
+  .bg-dark2  { background: var(--dark-2); }
+
+  .label-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em;
+    text-transform: uppercase; padding: 6px 14px; border-radius: 100px;
+    margin-bottom: 16px;
+  }
+  .label-tag.gold {
+    color: var(--gold-dark); background: rgba(240,180,41,0.12);
+    border: 1px solid rgba(240,180,41,0.3);
+  }
+  .label-tag.gold::before { content:''; width:5px; height:5px; border-radius:50%; background:var(--gold-dark); }
+  .label-tag.white {
+    color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+  .label-tag.white::before { content:''; width:5px; height:5px; border-radius:50%; background:var(--gold); }
+
+  .heading-dark {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.4rem,5vw,3.8rem); color: var(--text-dark);
+    line-height: 1.0; letter-spacing: 0.02em; margin-bottom: 14px;
+  }
+  .heading-dark span { color: var(--gold); }
+  .heading-white {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.4rem,5vw,3.8rem); color: var(--white);
+    line-height: 1.0; letter-spacing: 0.02em; margin-bottom: 14px;
+  }
+  .heading-white span { color: var(--gold); }
+
+  .body-dark  { color: var(--text-body); font-size: 1rem; line-height: 1.75; }
+  .body-white { color: rgba(255,255,255,0.65); font-size: 1rem; line-height: 1.75; }
+
+  .gold-rule { width: 52px; height: 3px; background: var(--gold); border-radius: 2px; margin: 18px 0 24px; }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 0.95rem;
+    padding: 13px 28px; border-radius: 8px; border: none; cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.2s;
+    letter-spacing: 0.01em;
+  }
+  .btn-gold { background: var(--gold); color: var(--dark); box-shadow: 0 4px 20px rgba(240,180,41,0.3); }
+  .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(240,180,41,0.45); }
+  .btn-dark { background: var(--dark); color: var(--white); }
+  .btn-dark:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(14,16,24,0.3); }
+  .btn-outline-white { background: transparent; color: var(--white); border: 1.5px solid rgba(255,255,255,0.3); }
+  .btn-outline-white:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+  .btn-outline-dark { background: transparent; color: var(--dark); border: 1.5px solid rgba(14,16,24,0.2); }
+  .btn-outline-dark:hover { border-color: var(--gold-dark); color: var(--gold-dark); transform: translateY(-2px); }
+  .btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+  /* ═══════════════════════════════════════
+     SCROLL ANIMATIONS
+  ═══════════════════════════════════════ */
+  .reveal {
+    opacity: 0; transform: translateY(28px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+  .reveal.in { opacity: 1; transform: none; }
+  .reveal.d1 { transition-delay: 0.08s; }
+  .reveal.d2 { transition-delay: 0.16s; }
+  .reveal.d3 { transition-delay: 0.24s; }
+  .reveal.d4 { transition-delay: 0.32s; }
+
+  /* ═══════════════════════════════════════
+     HOME — HERO  (full-bleed photo banner)
+  ═══════════════════════════════════════ */
+  .hero {
+    min-height: 100vh;
+    min-height: 100svh;
+    background: var(--dark);
+    position: relative; overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+
+  /* ── Photo fills 100% of hero as true background ── */
+  .hero-photo {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  .hero-photo img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: 60% center;
+    display: block;
+    animation: photoIn 1.4s ease both;
+  }
+  @keyframes photoIn {
+    from { opacity: 0; transform: scale(1.04); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  /* Layer 1 — gentle left vignette so text stays readable, but photo visible everywhere */
+  .hero-photo::before {
+    content: '';
+    position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(
+      100deg,
+      rgba(11,15,26,0.88) 0%,
+      rgba(11,15,26,0.65) 30%,
+      rgba(11,15,26,0.30) 55%,
+      rgba(11,15,26,0.10) 75%,
+      rgba(11,15,26,0.05) 100%
+    );
+  }
+
+  /* Layer 2 — bottom fade for stats bar readability */
+  .hero-photo::after {
+    content: '';
+    position: absolute; inset: 0; z-index: 2;
+    background: linear-gradient(
+      to bottom,
+      transparent 50%,
+      rgba(11,15,26,0.5) 80%,
+      rgba(11,15,26,0.85) 100%
+    );
+  }
+
+  /* Layer 3 — subtle navy-blue tint over entire photo for the guard-uniform feel */
+  .hero-tint {
+    position: absolute; inset: 0; z-index: 1;
+    background: rgba(16,28,55,0.30);
+  }
+
+  /* Subtle dot-grid texture */
+  .hero-bg-grid {
+    position: absolute; inset: 0; z-index: 2;
+    background-image: radial-gradient(rgba(240,180,41,0.06) 1px, transparent 1px);
+    background-size: 36px 36px;
+    mask-image: linear-gradient(to right, rgba(0,0,0,0.5) 0%, transparent 60%);
+  }
+
+  /* Gold glow behind text area */
+  .hero-glow {
+    position: absolute; top: 20%; left: -5%;
+    width: 500px; height: 500px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(240,180,41,0.06) 0%, transparent 65%);
+    pointer-events: none; z-index: 2;
+  }
+
+  /* ── Main layout: split into top content + bottom stats bar ── */
+  .hero-inner {
+    position: relative; z-index: 5;
+    flex: 1;                            /* takes all space above stats */
+    display: flex; align-items: center;
+    width: 100%; max-width: 1300px;
+    margin: 0 auto;
+    padding: calc(var(--nav-h) + 64px) 6% 40px;
+  }
+
+  /* Text block sits on the left half */
+  .hero-content {
+    max-width: 52%;
+  }
+
+  /* ── Stats bar — pinned to bottom of hero ── */
+  .hero-stats-bar {
+    position: relative; z-index: 5;
+    width: 100%;
+    background: rgba(11,15,26,0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid rgba(240,180,41,0.15);
+    padding: 24px 6%;
+    animation: slideUp 0.7s ease 0.5s both;
+  }
+  .hero-stats-inner {
+    max-width: 1300px; margin: 0 auto;
+    display: flex; gap: 0; align-items: center;
+  }
+  .hero-stat {
+    flex: 1; padding: 0 36px;
+    border-right: 1px solid rgba(255,255,255,0.08);
+    display: flex; align-items: center; gap: 16px;
+  }
+  .hero-stat:first-child { padding-left: 0; }
+  .hero-stat:last-child { border-right: none; padding-right: 0; }
+  .hero-stat .n {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem; color: var(--gold); letter-spacing: 0.02em; line-height: 1;
+    flex-shrink: 0;
+  }
+  .hero-stat .l {
+    font-size: 0.78rem; color: rgba(255,255,255,0.5);
+    text-transform: uppercase; letter-spacing: 0.1em; line-height: 1.4;
+  }
+
+  /* Floating badges — overlaid on the photo right side */
+  .guard-scene {
+    position: absolute; inset: 0; z-index: 4;
+    pointer-events: none;
+  }
+  .f-badge {
+    position: absolute;
+    background: rgba(11,15,26,0.82);
+    border: 1px solid rgba(240,180,41,0.30);
+    border-radius: 12px; padding: 12px 20px;
+    display: flex; align-items: center; gap: 10px;
+    color: var(--white); font-size: 0.85rem; font-weight: 700;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+    white-space: nowrap; backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    pointer-events: all;
+    letter-spacing: 0.02em;
+  }
+  .f-badge .fb-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--gold); flex-shrink: 0;
+    animation: pulse 2.5s ease-in-out infinite;
+  }
+  /* Position badges over the guard photo on the right */
+  .f-badge-1 { top: 22%;  right: 6%;  animation: floatY 4s ease-in-out infinite; }
+  .f-badge-2 { top: 48%;  right: 22%; animation: floatY 4s ease-in-out infinite 1.6s; }
+  .f-badge-3 { bottom: 22%; right: 5%; animation: floatY 4s ease-in-out infinite 3.2s; }
+  @keyframes floatY { 0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);} }
+
+  /* Bottom fade — blends hero into next dark section seamlessly */
+  .hero-bottom-fade {
+    position: absolute; bottom: -2px; left: 0; right: 0; z-index: 6;
+    height: 80px;
+    background: linear-gradient(to bottom, transparent, var(--dark));
+  }
+
+  /* ── Hero text elements ── */
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--gold);
+    background: rgba(240,180,41,0.08); border: 1px solid rgba(240,180,41,0.25);
+    padding: 7px 16px; border-radius: 100px; margin-bottom: 28px;
+    animation: slideUp 0.6s ease both;
+  }
+  .hero-badge .pulse {
+    width: 7px; height: 7px; background: var(--gold); border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(1.5);} }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 7vw, 7rem); color: var(--white);
+    line-height: 0.92; letter-spacing: 0.02em;
+    margin-bottom: 24px; text-transform: uppercase;
+    animation: slideUp 0.6s ease 0.1s both;
+  }
+  .hero-title .accent { color: var(--gold); }
+  .hero-title .outline {
+    -webkit-text-stroke: 2px rgba(255,255,255,0.20);
+    color: transparent;
+  }
+
+  .hero-desc {
+    font-size: 1.05rem; color: rgba(255,255,255,0.62);
+    line-height: 1.78; max-width: 480px; margin-bottom: 38px;
+    animation: slideUp 0.6s ease 0.2s both;
+  }
+
+  .hero-actions {
+    display: flex; gap: 14px; flex-wrap: wrap;
+    animation: slideUp 0.6s ease 0.3s both;
+  }
+
+  @keyframes slideUp { from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:none;} }
+
+  /* ═══════════════════════════════════════
+     MARQUEE STRIP
+  ═══════════════════════════════════════ */
+  .strip {
+    background: var(--dark); border-top: 1px solid rgba(240,180,41,0.15);
+    padding: 18px 0; overflow: hidden;
+  }
+  .strip-track {
+    display: flex; gap: 0; width: max-content;
+    animation: marquee 20s linear infinite;
+  }
+  .strip-item {
+    display: flex; align-items: center; gap: 10px; padding: 0 36px;
+    font-size: 0.8rem; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: rgba(255,255,255,0.35);
+    white-space: nowrap; border-right: 1px solid rgba(255,255,255,0.08);
+    flex-shrink: 0;
+  }
+  .strip-item .diamond { color: var(--gold); font-size: 0.55rem; }
+  @keyframes marquee { from{transform:translateX(0);}to{transform:translateX(-50%);} }
+
+  /* ═══════════════════════════════════════
+     HOME — SERVICES GRID (WHITE BG)
+  ═══════════════════════════════════════ */
+  .svc-grid {
+    display: grid; grid-template-columns: repeat(4,1fr); gap: 24px;
+    margin-top: 52px;
+  }
+  .svc-card {
+    background: var(--blue-card);
+    border: 1px solid var(--border-dark);
+    border-radius: 16px; padding: 32px 24px;
+    cursor: pointer; position: relative; overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    box-shadow: var(--shadow-card);
+  }
+  .svc-card::before {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+    background: var(--gold); transform: scaleX(0); transform-origin: left;
+    transition: transform 0.35s;
+  }
+  .svc-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-hover); border-color: rgba(240,180,41,0.3); }
+  .svc-card:hover::before { transform: scaleX(1); }
+
+  .svc-icon-wrap {
+    width: 58px; height: 58px; border-radius: 14px;
+    background: rgba(240,180,41,0.1); border: 1px solid rgba(240,180,41,0.2);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 20px; transition: background 0.3s;
+  }
+  .svc-card:hover .svc-icon-wrap { background: var(--gold); }
+  .svc-icon-wrap svg { width: 26px; height: 26px; color: var(--gold-dark); transition: color 0.3s; }
+  .svc-card:hover .svc-icon-wrap svg { color: var(--dark); }
+
+  .svc-card h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.35rem; letter-spacing:0.03em;  color: var(--text-dark); margin-bottom: 10px; }
+  .svc-card p { font-size: 0.875rem; color: var(--text-muted); line-height: 1.65; margin-bottom: 18px; }
+  .svc-arrow {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 0.82rem; font-weight: 700; color: var(--gold-dark);
+    letter-spacing: 0.04em; text-transform: uppercase;
+    transition: gap 0.2s;
+  }
+  .svc-card:hover .svc-arrow { gap: 10px; }
+  .svc-arrow svg { width:14px; height:14px; }
+
+  /* ═══════════════════════════════════════
+     HOME — WHY CHOOSE US (LIGHT BG)
+  ═══════════════════════════════════════ */
+  .why-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+  .why-card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .why-card {
+    background: var(--blue-card); border: 1px solid var(--border-dark);
+    border-radius: 14px; padding: 24px 20px;
+    box-shadow: var(--shadow-card);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .why-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+  .wc-icon {
+    width: 44px; height: 44px; border-radius: 10px;
+    background: rgba(240,180,41,0.1); display: flex; align-items: center; justify-content: center;
+    margin-bottom: 14px;
+  }
+  .wc-icon svg { width: 22px; height: 22px; color: var(--gold); }
+  .why-card h4 { font-family: 'Bebas Neue', sans-serif; font-size: 1.05rem; letter-spacing:0.03em; color:var(--white); margin-bottom:6px; }
+  .why-card p  { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; }
+
+  .why-right {}
+  .big-stat {
+    background: var(--dark); border-radius: 16px; padding: 36px; margin-bottom: 20px;
+    display: flex; align-items: center; gap: 20px;
+  }
+  .big-stat .bsn {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem; color: var(--gold); letter-spacing: 0.02em; line-height: 1;
+  }
+  .big-stat .bsl { font-size: 0.85rem; color: rgba(255,255,255,0.5); line-height: 1.5; }
+  .why-sub-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .wsub {
+    background: var(--blue-card); border: 1px solid var(--border-dark);
+    border-radius: 12px; padding: 20px; text-align: center;
+    box-shadow: var(--shadow-card);
+  }
+  .wsub .n { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--gold); }
+  .wsub .l { font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+
+  /* ═══════════════════════════════════════
+     HOME — CTA BANNER (DARK)
+  ═══════════════════════════════════════ */
+  .cta-wrap {
+    background: var(--dark-2); padding: 80px 5%;
+    position: relative; overflow: hidden;
+  }
+  .cta-wrap::before {
+    content: ''; position: absolute; top: -1px; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .cta-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-wrap: wrap;
+  }
+  .cta-inner h2 { font-family:'Bebas Neue',sans-serif; font-size:clamp(2rem,4vw,3rem); color:var(--white); letter-spacing:0.02em; }
+  .cta-inner p  { color: rgba(255,255,255,0.5); font-size:1rem; margin-top:6px; }
+  .cta-btns { display:flex; gap:14px; flex-wrap:wrap; }
+
+  /* ═══════════════════════════════════════
+     FOOTER (DARK)
+  ═══════════════════════════════════════ */
+  footer {
+    background: var(--dark);
+    border-top: 1px solid var(--border-dark);
+    padding: 60px 5% 28px;
+  }
+  .footer-inner { max-width: 1200px; margin: 0 auto; }
+  .footer-grid {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px;
+  }
+  .footer-brand p { font-size: 0.88rem; color: rgba(255,255,255,0.4); line-height: 1.7; margin-top: 16px; max-width: 280px; }
+  .footer-col h5 {
+    font-family: 'Bebas Neue', sans-serif; font-size: 1rem; letter-spacing: 0.1em;
+    color: var(--white); margin-bottom: 16px;
+  }
+  .footer-col a {
+    display: block; font-size: 0.87rem; color: rgba(255,255,255,0.4);
+    margin-bottom: 10px; cursor: pointer; transition: color 0.2s;
+  }
+  .footer-col a:hover { color: var(--gold); }
+  .footer-bottom {
+    border-top: 1px solid var(--border-dark);
+    padding-top: 24px;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+  }
+  .footer-bottom p { font-size: 0.8rem; color: rgba(255,255,255,0.3); }
+  .socials { display: flex; gap: 8px; }
+  .soc-btn {
+    width: 34px; height: 34px; border-radius: 7px;
+    background: var(--dark-3); border: 1px solid var(--border-dark);
+    display: flex; align-items:center; justify-content:center;
+    cursor: pointer; transition: border-color 0.2s;
+  }
+  .soc-btn:hover { border-color: var(--gold); }
+  .soc-btn svg { width: 14px; height: 14px; color: rgba(255,255,255,0.5); }
+
+  /* ═══════════════════════════════════════
+     PAGE HERO (light pages)
+  ═══════════════════════════════════════ */
+  .page-hero {
+    background: var(--dark);
+    padding: calc(var(--nav-h) + 64px) 5% 72px;
+    position: relative; overflow: hidden;
+  }
+  .page-hero-grid {
+    position:absolute; inset:0;
+    background-image:
+      linear-gradient(rgba(240,180,41,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(240,180,41,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .page-hero::after {
+    content:''; position:absolute; bottom:-2px; left:0; right:0;
+    height:60px; background:var(--light);
+    clip-path: polygon(0 100%, 100% 100%, 100% 20%);
+  }
+  .page-hero-inner { max-width:1200px; margin:0 auto; position:relative; z-index:1; }
+  .page-hero-inner h1 {
+    font-family:'Bebas Neue',sans-serif;
+    font-size: clamp(3rem,7vw,5.5rem); color:var(--white);
+    letter-spacing: 0.02em; line-height: 1; text-transform: uppercase;
+  }
+  .page-hero-inner h1 span { color: var(--gold); }
+  .page-hero-inner p { color: rgba(255,255,255,0.5); font-size:1.05rem; margin-top:12px; max-width:500px; }
+
+  /* ═══════════════════════════════════════
+     ABOUT PAGE
+  ═══════════════════════════════════════ */
+  .about-split { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+  .about-img-block {
+    position: relative;
+  }
+  .about-big-card {
+    background: var(--dark); border-radius: 20px; padding: 44px; overflow: hidden;
+    position: relative;
+  }
+  .about-big-card::before {
+    content: ''; position:absolute; top:0; left:0; right:0; height:3px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+  }
+  .about-icon-ring {
+    width: 80px; height: 80px; border-radius: 20px;
+    background: rgba(240,180,41,0.1); border: 1px solid rgba(240,180,41,0.2);
+    display: flex; align-items:center; justify-content:center; margin-bottom: 24px;
+  }
+  .about-icon-ring svg { width: 40px; height: 40px; color: var(--gold); }
+  .abc-title { font-family:'Bebas Neue',sans-serif; font-size:1.5rem; color:var(--white); letter-spacing:0.03em; margin-bottom:10px; }
+  .abc-body { font-size:0.9rem; color:rgba(255,255,255,0.5); line-height:1.75; }
+  .framework-tags { display:flex; flex-wrap:wrap; gap:8px; margin-top:20px; }
+  .ftag {
+    background: rgba(240,180,41,0.08); border: 1px solid rgba(240,180,41,0.2);
+    color: var(--gold-light); font-size: 0.8rem; font-weight: 600;
+    padding: 6px 14px; border-radius: 6px; letter-spacing: 0.06em;
+  }
+  .about-stat-trio { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top: 20px; }
+  .atrio { background:var(--dark-2); border:1px solid var(--border-dark); border-radius:12px; padding:16px; text-align:center; }
+  .atrio .n { font-family:'Bebas Neue',sans-serif; font-size:2rem; color:var(--gold); }
+  .atrio .l { font-size:0.72rem; color:rgba(255,255,255,0.4); text-transform:uppercase; letter-spacing:0.08em; margin-top:4px; }
+
+  .values-list { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:28px; }
+  .v-item {
+    background: var(--white); border: 1px solid var(--border-light);
+    border-left: 3px solid var(--gold);
+    border-radius: 8px; padding: 14px 16px;
+    font-size: 0.9rem; font-weight: 600; color: var(--dark);
+    box-shadow: var(--shadow-card);
+  }
+
+  .leader-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:52px; }
+  .leader-card {
+    background: var(--blue-card); border: 1px solid var(--border-dark);
+    border-radius: 16px; padding: 32px 28px; box-shadow: var(--shadow-card);
+    position: relative; overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .leader-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+  .leader-card::after {
+    content:''; position:absolute; top:0; right:0; width:80px; height:80px;
+    background: radial-gradient(circle at top right, rgba(240,180,41,0.08) 0%, transparent 70%);
+  }
+  .ldr-avatar {
+    width: 56px; height: 56px; background: var(--dark);
+    border-radius: 14px; display:flex; align-items:center; justify-content:center;
+    margin-bottom: 18px;
+  }
+  .ldr-avatar svg { width:28px; height:28px; color: var(--gold); }
+  .leader-card h3 { font-family:'Bebas Neue',sans-serif; font-size:1.4rem; letter-spacing:0.03em; color:var(--dark); }
+  .leader-card .role { font-size:0.75rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--gold-dark); margin-bottom:14px; }
+  .leader-card p { font-size:0.875rem; color:var(--text-muted); line-height:1.7; }
+
+  /* ═══════════════════════════════════════
+     SERVICES PAGE
+  ═══════════════════════════════════════ */
+  .svc-tabs { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:52px; }
+  .stab {
+    background:var(--blue-card); border:1.5px solid var(--border-dark);
+    color:var(--text-body); padding:10px 22px; border-radius:8px;
+    cursor:pointer; font-family:'Outfit',sans-serif; font-size:0.9rem; font-weight:600;
+    transition: all 0.22s; display:flex; align-items:center; gap:8px;
+    box-shadow: var(--shadow-card);
+  }
+  .stab svg { width:16px; height:16px; }
+  .stab:hover { border-color: var(--gold-dark); color:var(--gold-dark); }
+  .stab.active { background:var(--dark); border-color:var(--dark); color:var(--white); }
+
+  .svc-detail { display:none; }
+  .svc-detail.active { display:block; animation:fadeUp 0.4s ease; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;} }
+
+  .svc-detail-grid { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:start; }
+  .svc-detail-title {
+    font-family:'Bebas Neue',sans-serif; font-size:clamp(2rem,4vw,3rem);
+    color:var(--dark); letter-spacing:0.02em; line-height:1.05; margin-bottom:18px;
+    text-transform:uppercase;
+  }
+  .svc-detail-title span { color:var(--gold-dark); }
+  .svc-detail-desc { font-size:0.97rem; color:var(--text-body); line-height:1.8; margin-bottom:28px; }
+
+  .list-title { font-size:0.75rem; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold-dark); margin-bottom:14px; }
+  .svc-list { display:flex; flex-direction:column; gap:10px; margin-bottom:32px; }
+  .svc-list li {
+    display:flex; align-items:center; gap:12px;
+    font-size:0.92rem; color:var(--text-body); padding:10px 14px;
+    background:var(--blue-card); border:1px solid var(--border-dark); border-radius:8px;
+  }
+  .svc-list li .check { width:20px; height:20px; border-radius:50%; background:rgba(240,180,41,0.15); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .svc-list li .check svg { width:10px; height:10px; color:var(--gold-dark); }
+
+  .clients-wrap { margin-top:28px; }
+  .client-chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+  .chip {
+    background:var(--blue-card); border:1px solid var(--border-dark);
+    color:var(--text-body); font-size:0.78rem; font-weight:500;
+    padding:6px 12px; border-radius:6px; box-shadow:var(--shadow-card);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .chip:hover { border-color:var(--gold); color:var(--gold); }
+
+  .svc-aside {
+    background: var(--dark); border-radius: 20px; padding: 36px;
+    position: sticky; top: calc(var(--nav-h) + 20px);
+  }
+  .aside-icon-wrap {
+    width: 72px; height: 72px; border-radius: 18px;
+    background: rgba(240,180,41,0.12); display: flex; align-items:center; justify-content:center;
+    margin-bottom: 20px;
+  }
+  .aside-icon-wrap svg { width: 36px; height: 36px; color: var(--gold); }
+  .svc-aside h3 { font-family:'Bebas Neue',sans-serif; font-size:1.5rem; color:var(--white); letter-spacing:0.03em; margin-bottom:10px; }
+  .svc-aside p { font-size:0.87rem; color:rgba(255,255,255,0.5); line-height:1.7; }
+  .aside-hl {
+    background: rgba(240,180,41,0.07); border: 1px solid rgba(240,180,41,0.18);
+    border-radius: 12px; padding: 18px; margin-top:18px;
+  }
+  .aside-hl .hn { font-family:'Bebas Neue',sans-serif; font-size:2rem; color:var(--gold); }
+  .aside-hl .ht { font-size:0.8rem; color:rgba(255,255,255,0.4); margin-top:4px; line-height:1.5; }
+
+  /* ═══════════════════════════════════════
+     CONTACT PAGE
+  ═══════════════════════════════════════ */
+  .contact-layout { display:grid; grid-template-columns:1fr 1.3fr; gap:60px; margin-top:52px; }
+  .contact-info-card {
+    background:var(--dark); border-radius:20px; padding:40px;
+    position:relative; overflow:hidden;
+  }
+  .contact-info-card::before {
+    content:''; position:absolute; top:0; left:0; right:0; height:3px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+  }
+  .contact-info-card h3 { font-family:'Bebas Neue',sans-serif; font-size:1.6rem; color:var(--white); letter-spacing:0.03em; margin-bottom:28px; }
+  .ci-item { display:flex; gap:16px; padding:16px 0; border-bottom:1px solid var(--border-dark); }
+  .ci-item:last-of-type { border-bottom:none; }
+  .ci-icon { width:42px; height:42px; background:rgba(240,180,41,0.1); border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .ci-icon svg { width:20px; height:20px; color:var(--gold); }
+  .ci-label { font-size:0.72rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.4); margin-bottom:4px; }
+  .ci-val { font-size:0.95rem; color:var(--white); font-weight:500; }
+  .branch-tags { display:flex; flex-wrap:wrap; gap:8px; margin-top:28px; }
+  .btag { background:var(--dark-3); border:1px solid var(--border-dark); color:rgba(255,255,255,0.5); font-size:0.82rem; padding:7px 14px; border-radius:7px; }
+
+  .contact-form-card {
+    background:var(--blue-card); border:1px solid var(--border-dark);
+    border-radius:20px; padding:44px; box-shadow:var(--shadow-hover);
+  }
+  .contact-form-card h3 { font-family:'Bebas Neue',sans-serif; font-size:1.8rem; color:var(--white); letter-spacing:0.03em; margin-bottom:28px; }
+  .form-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .fg { margin-bottom:18px; }
+  .fg label { display:block; font-size:0.75rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px; }
+  .fg input, .fg select, .fg textarea {
+    width:100%; background:var(--dark-3); border:1.5px solid var(--border-dark);
+    border-radius:10px; padding:13px 16px;
+    font-family:'Outfit',sans-serif; font-size:0.95rem; color:var(--white);
+    outline:none; transition:border-color 0.2s, box-shadow 0.2s;
+    appearance:none; -webkit-appearance:none;
+  }
+  .fg input:focus, .fg select:focus, .fg textarea:focus {
+    border-color:var(--gold); box-shadow:0 0 0 3px rgba(240,180,41,0.12);
+    background:var(--dark-4);
+  }
+  .fg textarea { resize:vertical; min-height:120px; }
+  .fg input::placeholder, .fg textarea::placeholder { color:var(--text-muted); }
+  .form-ok { display:none; background:rgba(34,197,94,0.07); border:1px solid rgba(34,197,94,0.25); border-radius:10px; padding:16px; text-align:center; color:#4ade80; font-weight:600; margin-top:14px; }
+  .form-ok.show { display:block; animation:fadeUp 0.4s ease; }
+
+  /* ═══════════════════════════════════════
+     RESPONSIVE
+  ═══════════════════════════════════════ */
+  /* ═══════════════════════════════════════
+     RESPONSIVE — TABLET + MOBILE
+  ═══════════════════════════════════════ */
+
+  /* ── Tablet 1024px ── */
+  @media(max-width:1024px) {
+    .section { padding: 72px 5%; }
+    .svc-grid { grid-template-columns: repeat(2,1fr); gap: 18px; }
+    .hero-photo img { object-position: 65% center; }
+    .hero-content { max-width: 60%; }
+    .why-layout { grid-template-columns: 1fr; gap: 48px; }
+    .why-right { order: -1; }
+    .why-sub-stats { grid-template-columns: repeat(4,1fr); }
+    .about-split { grid-template-columns: 1fr; gap: 40px; }
+    .leader-grid { grid-template-columns: 1fr 1fr; }
+    .svc-detail-grid { grid-template-columns: 1fr; gap: 36px; }
+    .svc-aside { position: static; }
+    .contact-layout { grid-template-columns: 1fr; gap: 32px; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
+    .cta-inner { flex-direction: column; align-items: flex-start; gap: 28px; }
+    .hero-stats-bar { padding: 20px 5%; }
+    .hero-stat { padding: 0 24px; }
+    .hero-stat .n { font-size: 2.4rem; }
+  }
+
+  /* ── Mobile 768px ── */
+  @media(max-width:768px) {
+    :root { --nav-h: 60px; }
+
+    /* NAV */
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    nav { padding: 0 4%; padding-left: max(4%, env(safe-area-inset-left)); padding-right: max(4%, env(safe-area-inset-right)); }
+
+    /* HERO */
+    .hero { min-height: 100svh; }
+    .hero-photo img { object-position: 75% center; }
+    .hero-photo::before {
+      background: linear-gradient(
+        110deg,
+        rgba(11,15,26,0.98) 0%,
+        rgba(11,15,26,0.90) 40%,
+        rgba(11,15,26,0.55) 65%,
+        rgba(11,15,26,0.20) 100%
+      );
+    }
+    .hero-inner {
+      padding: calc(var(--nav-h) + 40px) 4% 28px;
+      align-items: flex-start;
+    }
+    .hero-content { max-width: 100%; }
+    .hero-title { font-size: clamp(3rem, 11vw, 4.2rem); }
+    .hero-desc { font-size: 0.97rem; max-width: 100%; }
+    .hero-actions { flex-direction: column; gap: 12px; }
+    .hero-actions .btn { width: 100%; justify-content: center; padding: 15px 24px; }
+    /* Stats bar stacks 2×2 on mobile */
+    .hero-stats-bar { padding: 18px 4%; padding-bottom: max(18px, env(safe-area-inset-bottom)); }
+    .hero-stats-inner { flex-wrap: wrap; gap: 0; }
+    .hero-stat {
+      flex: 0 0 50%; padding: 12px 20px;
+      border-right: 1px solid rgba(255,255,255,0.08);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .hero-stat:nth-child(2) { border-right: none; }
+    .hero-stat:nth-child(3) { border-bottom: none; }
+    .hero-stat:nth-child(4) { border-bottom: none; border-right: none; }
+    .hero-stat:first-child { padding-left: 20px; }
+    .hero-stat:last-child { padding-right: 20px; }
+    .hero-stat .n { font-size: 2.2rem; }
+    /* Badges smaller on mobile */
+    .f-badge { font-size: 0.76rem; padding: 8px 14px; }
+    .f-badge-1 { top: 16%; right: 3%; }
+    .f-badge-2 { top: 38%; right: 3%; bottom: auto; }
+    .f-badge-3 { display: none; }
+    .hero-bottom-fade { height: 50px; }
+
+    /* SECTIONS */
+    .section { padding: 56px 4%; }
+    .section-inner { width: 100%; }
+    .heading-dark, .heading-white { font-size: clamp(2rem, 8vw, 2.8rem); }
+
+    /* SERVICE GRID */
+    .svc-grid { grid-template-columns: 1fr; gap: 14px; }
+    .svc-card { padding: 24px 20px; }
+
+    /* WHY US */
+    .why-layout { grid-template-columns: 1fr; gap: 36px; }
+    .why-card-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .why-card { padding: 18px 16px; }
+    .why-sub-stats { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .big-stat { padding: 24px 20px; flex-direction: column; align-items: flex-start; gap: 12px; }
+
+    /* ABOUT */
+    .about-split { grid-template-columns: 1fr; gap: 32px; }
+    .about-big-card { padding: 28px 24px; }
+    .about-stat-trio { grid-template-columns: repeat(3,1fr); }
+    .values-list { grid-template-columns: 1fr; }
+    .leader-grid { grid-template-columns: 1fr; }
+    .leader-card { padding: 24px 20px; }
+
+    /* SERVICES TABS */
+    .svc-tabs {
+      display: flex; gap: 8px;
+      overflow-x: auto; flex-wrap: nowrap;
+      -webkit-overflow-scrolling: touch;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 8px;
+      scrollbar-width: none;
+    }
+    .svc-tabs::-webkit-scrollbar { display: none; }
+    .stab { flex-shrink: 0; scroll-snap-align: start; padding: 10px 16px; font-size: 0.85rem; min-height: 44px; }
+    .stab svg { display: none; }
+    .svc-detail-grid { grid-template-columns: 1fr; gap: 28px; }
+    .svc-aside { position: static; padding: 28px 24px; }
+    .svc-detail-title { font-size: clamp(1.8rem, 6vw, 2.4rem); }
+
+    /* CONTACT */
+    .contact-layout { grid-template-columns: 1fr; gap: 24px; }
+    .contact-info-card { padding: 28px 24px; }
+    .contact-form-card { padding: 28px 20px; }
+    .form-row { grid-template-columns: 1fr; gap: 0; }
+
+    /* CTA */
+    .cta-wrap { padding: 56px 4%; }
+    .cta-inner { flex-direction: column; align-items: stretch; gap: 24px; }
+    .cta-btns { flex-direction: column; gap: 12px; }
+    .cta-btns .btn { width: 100%; justify-content: center; }
+
+    /* FOOTER */
+    .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+    footer { padding: 44px 4% 24px; padding-bottom: max(24px, env(safe-area-inset-bottom)); }
+    .footer-bottom { flex-direction: column; align-items: center; text-align: center; gap: 16px; }
+
+    /* PAGE HEROES */
+    .page-hero { padding: calc(var(--nav-h) + 40px) 4% 56px; }
+    .page-hero::after { height: 40px; }
+    .page-hero-inner h1 { font-size: clamp(2.4rem, 10vw, 4rem); }
+
+    /* MOBILE MENU */
+    .mobile-menu { padding: 12px; }
+    .mobile-menu button { min-height: 48px; padding: 12px 16px; }
+  }
+
+  /* ── Small mobile 480px ── */
+  @media(max-width:480px) {
+    .why-card-grid { grid-template-columns: 1fr; }
+    .hero-title { font-size: clamp(2.6rem, 13vw, 3.4rem); }
+    .svc-card { padding: 20px 16px; }
+    .contact-form-card, .contact-info-card { padding: 22px 16px; }
+    .leader-card { padding: 20px 16px; }
+    .section { padding: 44px 4%; }
+    .hero-stat .n { font-size: 1.9rem; }
+  }
+
+  /* ── Landscape phone ── */
+  @media(max-height:500px) and (orientation:landscape) {
+    .hero { min-height: auto; }
+    .hero-inner { padding-top: calc(var(--nav-h) + 16px); padding-bottom: 16px; }
+    .hero-title { font-size: clamp(2rem, 6vw, 3rem); }
+    .hero-desc { display: none; }
+    .hero-stats-bar { display: none; }
+    .f-badge-1, .f-badge-2 { display: none; }
+  }
+  </style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav id="mainNav">
+  <div class="nav-logo" onclick="goPage('home')">
+    <div class="logo-hex">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    </div>
+    <div class="logo-text-wrap">
+      <div class="lg-main">DSS Group</div>
+      <div class="lg-sub">Defensive Security Services</div>
+    </div>
+  </div>
+  <div class="nav-links">
+    <button id="nb-home"     class="active" onclick="goPage('home')">Home</button>
+    <button id="nb-about"    onclick="goPage('about')">About Us</button>
+    <button id="nb-services" onclick="goPage('services')">Services</button>
+    <button id="nb-contact"  onclick="goPage('contact')">Contact</button>
+    <button class="nav-cta-btn" onclick="goPage('contact')">Get a Quote</button>
+  </div>
+  <div class="hamburger" id="hamburger" onclick="toggleMob()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobMenu">
+  <button onclick="goPage('home');toggleMob()">Home</button>
+  <button onclick="goPage('about');toggleMob()">About Us</button>
+  <button onclick="goPage('services');toggleMob()">Services</button>
+  <button onclick="goPage('contact');toggleMob()">Contact</button>
+  <button class="mob-cta" onclick="goPage('contact');toggleMob()">Get a Quote</button>
+</div>
+
+<!-- ══════════════════════════════════════
+     HOME
+══════════════════════════════════════ -->
+<div class="page active" id="page-home">
+
+  <!-- Hero -->
+  <section class="hero">
+    <!-- Full-bleed photo background -->
+    <div class="hero-photo">
+      <img
+        src="static/secc.png"
+        alt="DSS Group Security Personnel"
+        onerror="this.closest('.hero-photo').style.background='linear-gradient(135deg,#1E2B4A 0%,#0B0F1A 100%)'"
+      />
+    </div>
+
+    <!-- Tint + texture layers -->
+    <div class="hero-tint"></div>
+    <div class="hero-bg-grid"></div>
+    <div class="hero-glow"></div>
+
+    <!-- Floating badges over the guards -->
+    <div class="guard-scene">
+      <div class="f-badge f-badge-1"><div class="fb-dot"></div>Security 24/7</div>
+      <div class="f-badge f-badge-2"><div class="fb-dot"></div>1000+ Personnel</div>
+      <div class="f-badge f-badge-3"><div class="fb-dot"></div>Verified Staff</div>
+    </div>
+
+    <!-- Main content area -->
+    <div class="hero-inner">
+      <div class="hero-content">
+        <div class="hero-badge"><div class="pulse"></div>Est. 2011 — Nashik, Maharashtra</div>
+        <h1 class="hero-title">
+          Fortifying<br/>
+          <span class="accent">Your World,</span><br/>
+          <span class="outline">Every Day</span>
+        </h1>
+        <p class="hero-desc">Comprehensive Security Personnel, Manpower Supply, Housekeeping &amp; Fabrication Services — trusted by 70+ clients across Maharashtra.</p>
+        <div class="hero-actions">
+          <button class="btn btn-gold" onclick="goPage('contact')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11.5 19.79 19.79 0 01.12 2.82 2 2 0 012.11 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            Call Us Today
+          </button>
+          <button class="btn btn-outline-white" onclick="goPage('services')">Explore Services</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats bar — spans full width at bottom of hero -->
+    <div class="hero-stats-bar">
+      <div class="hero-stats-inner">
+        <div class="hero-stat">
+          <div class="n" data-target="70">0+</div>
+          <div class="l">Happy<br/>Clients</div>
+        </div>
+        <div class="hero-stat">
+          <div class="n" data-target="1000">0+</div>
+          <div class="l">Trained<br/>Personnel</div>
+        </div>
+        <div class="hero-stat">
+         <div class="n" data-target="14">0+</div>
+          <div class="l">Years of<br/>Experience</div>
+        </div>
+        <div class="hero-stat">
+         <div class="n" data-target="4">0</div>
+          <div class="l">Office<br/>Locations</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-bottom-fade"></div>
+  </section>
+
+  <!-- Marquee strip -->
+  <div class="strip">
+    <div class="strip-track" id="marqueeTrack">
+      <div class="strip-item"><span class="diamond">◆</span> Security Personnel</div>
+      <div class="strip-item"><span class="diamond">◆</span> Manpower Supply</div>
+      <div class="strip-item"><span class="diamond">◆</span> Housekeeping Services</div>
+      <div class="strip-item"><span class="diamond">◆</span> Fabrication Work</div>
+      <div class="strip-item"><span class="diamond">◆</span> Industrial Security</div>
+      <div class="strip-item"><span class="diamond">◆</span> Labour Deployment</div>
+      <div class="strip-item"><span class="diamond">◆</span> 24/7 Support</div>
+      <div class="strip-item"><span class="diamond">◆</span> B2B Vendorship</div>
+      <div class="strip-item"><span class="diamond">◆</span> Security Personnel</div>
+      <div class="strip-item"><span class="diamond">◆</span> Manpower Supply</div>
+      <div class="strip-item"><span class="diamond">◆</span> Housekeeping Services</div>
+      <div class="strip-item"><span class="diamond">◆</span> Fabrication Work</div>
+      <div class="strip-item"><span class="diamond">◆</span> Industrial Security</div>
+      <div class="strip-item"><span class="diamond">◆</span> Labour Deployment</div>
+      <div class="strip-item"><span class="diamond">◆</span> 24/7 Support</div>
+      <div class="strip-item"><span class="diamond">◆</span> B2B Vendorship</div>
+    </div>
+  </div>
+
+  <!-- Services (white bg) -->
+  <section class="section bg-white">
+    <div class="section-inner">
+      <div class="reveal">
+        <div class="label-tag gold">What We Offer</div>
+        <h2 class="heading-dark">Our <span>Core Services</span></h2>
+        <p class="body-dark" style="max-width:520px;">From trained security guards to skilled manpower and precision fabrication — end-to-end workforce solutions.</p>
+      </div>
+      <div class="svc-grid">
+        <div class="svc-card reveal d1" onclick="goPage('services','security')">
+          <div class="svc-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3>Security Personnel</h3>
+          <p>Well-trained, background-verified security guards for industrial, commercial, and residential premises with 24/7 coverage.</p>
+          <div class="svc-arrow">View Details <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+        </div>
+        <div class="svc-card reveal d2" onclick="goPage('services','manpower')">
+          <div class="svc-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          </div>
+          <h3>Manpower Supply</h3>
+          <p>Skilled, semi-skilled, and unskilled workforce for manufacturing, construction, and industrial operations on flexible terms.</p>
+          <div class="svc-arrow">View Details <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+        </div>
+        <div class="svc-card reveal d3" onclick="goPage('services','housekeeping')">
+          <div class="svc-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <h3>Housekeeping</h3>
+          <p>Professional cleaning and hygiene maintenance staff for offices, factories, residences, and commercial spaces.</p>
+          <div class="svc-arrow">View Details <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+        </div>
+        <div class="svc-card reveal d4" onclick="goPage('services','fabrication')">
+          <div class="svc-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/><path d="M15.54 8.46a5 5 0 010 7.07M8.46 8.46a5 5 0 000 7.07"/></svg>
+          </div>
+          <h3>Fabrication Services</h3>
+          <p>High-quality B2B fabrication — structural, metal, and precision work delivered to exact drawings and specifications.</p>
+          <div class="svc-arrow">View Details <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Us (light bg) -->
+  <section class="section bg-light">
+    <div class="section-inner">
+      <div class="why-layout">
+        <div>
+          <div class="reveal"><div class="label-tag gold">Why DSS Group</div></div>
+          <h2 class="heading-dark reveal d1">Built on <span>Trust,</span><br/>Driven by Discipline</h2>
+          <p class="body-dark reveal d2" style="margin-bottom:32px;">Since 2011, we have been the preferred workforce partner for 70+ companies across Maharashtra — from MNCs to government institutions.</p>
+          <div class="why-card-grid">
+            <div class="why-card reveal d1">
+              <div class="wc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <h4>Trained & Verified Staff</h4>
+              <p>Background-checked, trained personnel meeting highest safety standards.</p>
+            </div>
+            <div class="why-card reveal d2">
+              <div class="wc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+              <h4>24/7 Support</h4>
+              <p>Round-the-clock coordination and rapid response to any situation.</p>
+            </div>
+            <div class="why-card reveal d3">
+              <div class="wc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+              <h4>Cost-Effective</h4>
+              <p>Flexible contracts tailored to your budget without compromising quality.</p>
+            </div>
+            <div class="why-card reveal d4">
+              <div class="wc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+              <h4>Industry Experience</h4>
+              <p>17+ years of hands-on expertise across security and workforce sectors.</p>
+            </div>
+          </div>
+        </div>
+        <div class="why-right reveal d2">
+          <div class="big-stat">
+            <div>
+              <div class="bsn">1000+</div>
+              <div class="bsl">Trained personnel<br/>ready for deployment</div>
+            </div>
+            <div style="width:1px;height:60px;background:rgba(255,255,255,0.08);margin:0 8px;"></div>
+            <svg style="width:56px;height:56px;opacity:0.2;" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          </div>
+          <div class="why-sub-stats">
+            <div class="wsub"><div class="n">70+</div><div class="l">Clients Served</div></div>
+            <div class="wsub"><div class="n">14+</div><div class="l">Years Active</div></div>
+            <div class="wsub"><div class="n">4</div><div class="l">Office Locations</div></div>
+            <div class="wsub"><div class="n">4</div><div class="l">Service Verticals</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-wrap">
+    <div class="cta-inner reveal">
+      <div>
+        <h2>Ready to Secure Your Operations?</h2>
+        <p>Get a free customised quote for your security and manpower requirements.</p>
+      </div>
+      <div class="cta-btns">
+        <button class="btn btn-gold" onclick="goPage('contact')">Get a Free Quote</button>
+        <button class="btn btn-outline-white" onclick="goPage('about')">Learn About Us</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="nav-logo">
+            <div class="logo-hex"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <div class="logo-text-wrap"><div class="lg-main" style="color:var(--white)">DSS Group</div><div class="lg-sub">Defensive Security Services</div></div>
+          </div>
+          <p>Trusted manpower and security solutions since 2011, serving 70+ clients across Nashik, Mumbai, Pune, and Chhatrapati Sambhajinagar.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Services</h5>
+          <a onclick="goPage('services','security')">Security Personnel</a>
+          <a onclick="goPage('services','manpower')">Manpower Supply</a>
+          <a onclick="goPage('services','housekeeping')">Housekeeping</a>
+          <a onclick="goPage('services','fabrication')">Fabrication</a>
+        </div>
+        <div class="footer-col">
+          <h5>Company</h5>
+          <a onclick="goPage('home')">Home</a>
+          <a onclick="goPage('about')">About Us</a>
+          <a onclick="goPage('contact')">Contact</a>
+        </div>
+        <div class="footer-col">
+          <h5>Offices</h5>
+          <a>Nashik (HQ)</a><a>Mumbai</a><a>Pune</a><a>Chh. Sambhajinagar</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 DSS Group – Defensive Security Services. All rights reserved.</p>
+        <div class="socials">
+          <div class="soc-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div>
+          <div class="soc-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg></div>
+          <div class="soc-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></div>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div><!-- /home -->
+
+<!-- ══════════════════════════════════════
+     ABOUT
+══════════════════════════════════════ -->
+<div class="page" id="page-about">
+  <div class="page-hero">
+    <div class="page-hero-grid"></div>
+    <div class="page-hero-inner">
+      <div class="label-tag white">Our Story</div>
+      <h1>About <span>DSS Group</span></h1>
+      <p>A decade-plus of protecting businesses and powering workforces across Maharashtra.</p>
+    </div>
+  </div>
+
+  <section class="section bg-light">
+    <div class="section-inner">
+      <div class="about-split">
+        <div class="reveal">
+          <div class="label-tag gold">Who We Are</div>
+          <h2 class="heading-dark">Trusted <span>Guardians</span><br/>Since 2011</h2>
+          <div class="gold-rule"></div>
+          <p class="body-dark" style="margin-bottom:14px;"><strong style="color:var(--dark)">Defensive Security Services (DSS Group)</strong> is a leading manpower and security solutions organization, established in 2011. Headquartered in Nashik, we operate through branch offices in Mumbai, Pune, and Chhatrapati Sambhajinagar.</p>
+          <p class="body-dark" style="margin-bottom:28px;">With a strong base of <strong style="color:var(--gold-dark)">70+ satisfied clients</strong> and a workforce of <strong style="color:var(--gold-dark)">1000+ trained personnel</strong>, we serve national and multinational companies, corporate organizations, government bodies, and educational institutions.</p>
+          <div class="values-list">
+            <div class="v-item">Integrity &amp; Discipline</div>
+            <div class="v-item">Commitment to Quality</div>
+            <div class="v-item">Client Satisfaction</div>
+            <div class="v-item">Safety First</div>
+          </div>
+        </div>
+        <div class="about-img-block reveal d2">
+          <div class="about-big-card">
+            <div class="about-icon-ring">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="abc-title">Our Mission</div>
+            <p class="abc-body">To become the world's most trusted guardian of people and assets — creating a future where business continuity and personal freedom are never compromised by an evolving threat landscape.</p>
+            <div class="framework-tags">
+              <span class="ftag">Deter</span>
+              <span class="ftag">Detect</span>
+              <span class="ftag">Delay</span>
+              <span class="ftag">Respond</span>
+            </div>
+            <div class="about-stat-trio">
+              <div class="atrio"><div class="n">70+</div><div class="l">Clients</div></div>
+              <div class="atrio"><div class="n">1000+</div><div class="l">Personnel</div></div>
+              <div class="atrio"><div class="n">14+</div><div class="l">Years</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-white">
+    <div class="section-inner">
+      <div class="reveal"><div class="label-tag gold">Our Leadership</div></div>
+      <h2 class="heading-dark reveal d1">The People Behind <span>DSS Group</span></h2>
+      <div class="leader-grid">
+        <div class="leader-card reveal d1">
+          <div class="ldr-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+          <h3>Mr. Vinod Shukla</h3>
+          <div class="role">Managing Director</div>
+          <p>Brings over <strong style="color:var(--dark)">17 years of rich experience</strong> in manpower solutions, security services, and fabrication work. His strong industry knowledge and leadership have been instrumental in establishing DSS Group as a trusted service provider. Under his guidance, the organization has consistently grown in scale, capability, and client confidence.</p>
+        </div>
+        <div class="leader-card reveal d2">
+          <div class="ldr-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+          <h3>Mr. Suyash Shukla</h3>
+          <div class="role">Director</div>
+          <p>Joined DSS Group in 2021 with an <strong style="color:var(--dark)">MBA in Finance</strong>. Plays a key role in strategic planning, financial management, and organizational growth. His modern approach and business insight contribute to strengthening operational efficiency and expanding DSS Group's regional presence.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-wrap">
+    <div class="cta-inner reveal">
+      <div><h2>Partner With DSS Group Today</h2><p>Join 70+ businesses that trust us for their security and manpower needs.</p></div>
+      <div class="cta-btns">
+        <button class="btn btn-gold" onclick="goPage('contact')">Get in Touch</button>
+        <button class="btn btn-outline-white" onclick="goPage('services')">Our Services</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="nav-logo"><div class="logo-hex"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="logo-text-wrap"><div class="lg-main" style="color:var(--white)">DSS Group</div><div class="lg-sub">Defensive Security Services</div></div></div>
+          <p>Trusted manpower and security solutions since 2011.</p>
+        </div>
+        <div class="footer-col"><h5>Services</h5><a onclick="goPage('services','security')">Security Personnel</a><a onclick="goPage('services','manpower')">Manpower Supply</a><a onclick="goPage('services','housekeeping')">Housekeeping</a><a onclick="goPage('services','fabrication')">Fabrication</a></div>
+        <div class="footer-col"><h5>Company</h5><a onclick="goPage('home')">Home</a><a onclick="goPage('about')">About Us</a><a onclick="goPage('contact')">Contact</a></div>
+        <div class="footer-col"><h5>Offices</h5><a>Nashik (HQ)</a><a>Mumbai</a><a>Pune</a><a>Chh. Sambhajinagar</a></div>
+      </div>
+      <div class="footer-bottom"><p>© 2024 DSS Group. All rights reserved.</p><div class="socials"><div class="soc-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div><div class="soc-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg></div><div class="soc-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></div></div></div>
+    </div>
+  </footer>
+</div><!-- /about -->
+
+<!-- ══════════════════════════════════════
+     SERVICES
+══════════════════════════════════════ -->
+<div class="page" id="page-services">
+  <div class="page-hero">
+    <div class="page-hero-grid"></div>
+    <div class="page-hero-inner">
+      <div class="label-tag white">What We Do</div>
+      <h1>Our <span>Services</span></h1>
+      <p>End-to-end workforce solutions tailored to your industry's unique requirements.</p>
+    </div>
+  </div>
+
+  <section class="section bg-light">
+    <div class="section-inner">
+      <div class="svc-tabs" id="svcTabs">
+        <button class="stab active" onclick="switchSvc('security')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Security Personnel
+        </button>
+        <button class="stab" onclick="switchSvc('manpower')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          Manpower Supply
+        </button>
+        <button class="stab" onclick="switchSvc('housekeeping')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          Housekeeping
+        </button>
+        <button class="stab" onclick="switchSvc('fabrication')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/></svg>
+          Fabrication
+        </button>
+      </div>
+
+      <!-- SECURITY -->
+      <div class="svc-detail active" id="sd-security">
+        <div class="svc-detail-grid">
+          <div>
+            <div class="label-tag gold">Service 01</div>
+            <h2 class="svc-detail-title">Security <span>Personnel</span> Services</h2>
+            <p class="svc-detail-desc">We provide well-trained, disciplined, and alert security personnel for industrial, commercial, and residential premises. Guards are carefully selected, background-verified, and trained to handle access control, surveillance, and on-site safety with professionalism.</p>
+            <div class="list-title">Services Include</div>
+            <ul class="svc-list">
+              <li><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Security guards for all premises</li>
+              <li><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Corporate &amp; office security guards</li>
+              <li><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Industrial &amp; factory security</li>
+              <li><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Site and warehouse security</li>
+              <li><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Entry &amp; exit monitoring</li>
+              <li><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Visitor management &amp; access control</li>
+              <li><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Night watch &amp; shift-based coverage</li>
+            </ul>
+            <div class="clients-wrap">
+              <div class="list-title">Our Clients</div>
+              <div class="client-chips">
+                <span class="chip">YHVC Components Pvt. Ltd.</span>
+                <span class="chip">Esteem Label Pvt. Ltd.</span>
+                <span class="chip">Sai Engineering Pvt. Ltd.</span>
+                <span class="chip">Nashik Switch Gear Pvt. Ltd.</span>
+                <span class="chip">Asia Automotive Ltd.</span>
+                <span class="chip">JCB – Ratnaprabha World</span>
+                <span class="chip">Minitek System India Pvt. Ltd.</span>
+                <span class="chip">Akasyl Paints &amp; Powder</span>
+              </div>
+            </div>
+            <button class="btn btn-gold" style="margin-top:32px;" onclick="goPage('contact')">Request Security Services</button>
+          </div>
+          <div class="svc-aside">
+            <div class="aside-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <h3>Trusted Protection</h3>
+            <p>Background-verified guards trained in the Deter-Detect-Delay-Respond framework for every client.</p>
+            <div class="aside-hl"><div class="hn">8+</div><div class="ht">Major industrial clients secured in Nashik region</div></div>
+            <div class="aside-hl"><div class="hn">24/7</div><div class="ht">Round-the-clock monitoring and field support</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MANPOWER -->
+      <div class="svc-detail" id="sd-manpower">
+        <div class="svc-detail-grid">
+          <div>
+            <div class="label-tag gold">Service 02</div>
+            <h2 class="svc-detail-title">Manpower &amp; <span>Labour</span> Supply</h2>
+            <p class="svc-detail-desc">Reliable and flexible manpower solutions for industrial, manufacturing, construction, and commercial operations. Our workforce is carefully selected, trained, and supervised to ensure productivity, discipline, and safety at the workplace.</p>
+            <div class="list-title">Manpower Categories</div>
+            <ul class="svc-list">
+              <li><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Skilled manpower</li>
+              <li><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Semi-skilled manpower</li>
+              <li><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Unskilled labour</li>
+              <li><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Factory &amp; production workers</li>
+              <li><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Construction labour</li>
+              <li><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Helpers, loaders &amp; material handlers</li>
+              <li><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Technical assistants</li>
+            </ul>
+            <div class="clients-wrap">
+              <div class="list-title">Our Clients</div>
+              <div class="client-chips">
+                <span class="chip">Sinnar Automotives Pvt. Ltd.</span>
+                <span class="chip">Pinnacle Englpast Pvt. Ltd.</span>
+                <span class="chip">Supreme Equipment Pvt. Ltd.</span>
+                <span class="chip">Timus Concepts Pvt. Ltd.</span>
+                <span class="chip">Bastiram Narayandas Sarda</span>
+                <span class="chip">Ranzeal Fitness Limited</span>
+                <span class="chip">Plasto Fab Pvt. Ltd.</span>
+                <span class="chip">Koral Pharma</span>
+              </div>
+            </div>
+            <button class="btn btn-gold" style="margin-top:32px;" onclick="goPage('contact')">Request Manpower</button>
+          </div>
+          <div class="svc-aside">
+            <div class="aside-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+            <h3>Workforce Solutions</h3>
+            <p>Flexible short-term and long-term contracts with on-site supervision for all industries.</p>
+            <div class="aside-hl"><div class="hn">1000+</div><div class="ht">Trained personnel ready for immediate deployment</div></div>
+            <div class="aside-hl"><div class="hn">9+</div><div class="ht">Active manpower clients across manufacturing &amp; FMCG</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HOUSEKEEPING -->
+      <div class="svc-detail" id="sd-housekeeping">
+        <div class="svc-detail-grid">
+          <div>
+            <div class="label-tag gold">Service 03</div>
+            <h2 class="svc-detail-title">Housekeeping <span>Services</span></h2>
+            <p class="svc-detail-desc">Professional housekeeping services designed to maintain cleanliness, hygiene, and a well-organised working environment. Our staff follows systematic cleaning procedures, safety norms, and hygiene standards for industrial, commercial, and residential premises.</p>
+            <div class="list-title">Services Include</div>
+            <ul class="svc-list">
+              <li><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Office and corporate housekeeping</li>
+              <li><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Industrial &amp; factory cleaning</li>
+              <li><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Floor, workstation &amp; common-area cleaning</li>
+              <li><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Residential &amp; society housekeeping</li>
+              <li><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Daily &amp; periodic cleaning staff</li>
+            </ul>
+            <div class="clients-wrap">
+              <div class="list-title">Our Clients</div>
+              <div class="client-chips">
+                <span class="chip">Motion Metriks Components</span>
+                <span class="chip">Sky Fitness Pvt. Ltd.</span>
+                <span class="chip">Benson Agro Engineering</span>
+                <span class="chip">Panchshil Industries</span>
+                <span class="chip">Sonav Technologies Pvt. Ltd.</span>
+              </div>
+            </div>
+            <button class="btn btn-gold" style="margin-top:32px;" onclick="goPage('contact')">Request Housekeeping</button>
+          </div>
+          <div class="svc-aside">
+            <div class="aside-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+            <h3>Clean &amp; Compliant</h3>
+            <p>Systematic hygiene protocols for healthier, more productive workplaces across all premises types.</p>
+            <div class="aside-hl"><div class="hn">5+</div><div class="ht">Regular housekeeping clients across Nashik region</div></div>
+            <div class="aside-hl"><div class="hn">Flexible</div><div class="ht">Daily, shift-based, or long-term contract deployment</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FABRICATION -->
+      <div class="svc-detail" id="sd-fabrication">
+        <div class="svc-detail-grid">
+          <div>
+            <div class="label-tag gold">Service 04</div>
+            <h2 class="svc-detail-title">Fabrication <span>Services</span></h2>
+            <p class="svc-detail-desc">Reliable and high-quality fabrication services with a strong focus on B2B vendorship and long-term industrial support. Work is carried out with precision, adherence to technical specifications, and a commitment to timely delivery.</p>
+            <div class="list-title">Fabrication Work Includes</div>
+            <ul class="svc-list">
+              <li><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>B2B vendorship fabrication work</li>
+              <li><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Structural fabrication</li>
+              <li><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Metal &amp; steel fabrication</li>
+              <li><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Precision fabrication support</li>
+              <li><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Industrial fabrication &amp; assembly</li>
+              <li><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Custom fabrication per drawings &amp; specs</li>
+            </ul>
+            <div class="clients-wrap">
+              <div class="list-title">Our Clients</div>
+              <div class="client-chips">
+                <span class="chip">Zenith Metaplast Pvt. Ltd.</span>
+                <span class="chip">Benson Agro Engineering</span>
+                <span class="chip">Nirmala Precision Tools</span>
+                <span class="chip">Janhavi Industries</span>
+                <span class="chip">Nirmiti Precision Pvt. Ltd.</span>
+              </div>
+            </div>
+            <button class="btn btn-gold" style="margin-top:32px;" onclick="goPage('contact')">Request Fabrication</button>
+          </div>
+          <div class="svc-aside">
+            <div class="aside-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/><path d="M15.54 8.46a5 5 0 010 7.07M8.46 8.46a5 5 0 000 7.07"/></svg></div>
+            <h3>Precision Engineering</h3>
+            <p>Custom fabrication solutions for manufacturing and engineering companies with strict spec adherence.</p>
+            <div class="aside-hl"><div class="hn">5+</div><div class="ht">Engineering &amp; manufacturing B2B clients</div></div>
+            <div class="aside-hl"><div class="hn">100%</div><div class="ht">Adherence to technical drawings &amp; specifications</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-wrap">
+    <div class="cta-inner reveal">
+      <div><h2>Need a Customised Solution?</h2><p>Tell us your requirements and we'll create the perfect workforce plan.</p></div>
+      <div class="cta-btns"><button class="btn btn-gold" onclick="goPage('contact')">Contact Us Now</button></div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand"><div class="nav-logo"><div class="logo-hex"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="logo-text-wrap"><div class="lg-main" style="color:var(--white)">DSS Group</div><div class="lg-sub">Defensive Security Services</div></div></div><p>Trusted manpower and security solutions since 2011.</p></div>
+        <div class="footer-col"><h5>Services</h5><a onclick="switchSvc('security')">Security Personnel</a><a onclick="switchSvc('manpower')">Manpower Supply</a><a onclick="switchSvc('housekeeping')">Housekeeping</a><a onclick="switchSvc('fabrication')">Fabrication</a></div>
+        <div class="footer-col"><h5>Company</h5><a onclick="goPage('home')">Home</a><a onclick="goPage('about')">About Us</a><a onclick="goPage('contact')">Contact</a></div>
+        <div class="footer-col"><h5>Offices</h5><a>Nashik (HQ)</a><a>Mumbai</a><a>Pune</a><a>Chh. Sambhajinagar</a></div>
+      </div>
+      <div class="footer-bottom"><p>© 2024 DSS Group. All rights reserved.</p><div class="socials"><div class="soc-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div><div class="soc-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg></div><div class="soc-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></div></div></div>
+    </div>
+  </footer>
+</div><!-- /services -->
+
+<!-- ══════════════════════════════════════
+     CONTACT
+══════════════════════════════════════ -->
+<div class="page" id="page-contact">
+  <div class="page-hero">
+    <div class="page-hero-grid"></div>
+    <div class="page-hero-inner">
+      <div class="label-tag white">Reach Out</div>
+      <h1>Let's Work <span>Together</span></h1>
+      <p>Get in touch for reliable security, manpower, housekeeping, and fabrication services.</p>
+    </div>
+  </div>
+
+  <section class="section bg-light">
+    <div class="section-inner">
+      <div class="contact-layout">
+        <div class="reveal">
+          <div class="contact-info-card">
+            <h3>Contact Information</h3>
+            <div class="ci-item">
+              <div class="ci-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11.5 19.79 19.79 0 01.12 2.82 2 2 0 012.11 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div>
+              <div><div class="ci-label">Phone</div><div class="ci-val">Update with your number</div></div>
+            </div>
+            <div class="ci-item">
+              <div class="ci-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+              <div><div class="ci-label">Email</div><div class="ci-val">Update with your email</div></div>
+            </div>
+            <div class="ci-item">
+              <div class="ci-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+              <div><div class="ci-label">Headquarters</div><div class="ci-val">Nashik, Maharashtra, India</div></div>
+            </div>
+            <div style="margin-top:28px;">
+              <div class="ci-label" style="margin-bottom:12px;">Branch Offices</div>
+              <div class="branch-tags">
+                <span class="btag">Nashik (HQ)</span>
+                <span class="btag">Mumbai</span>
+                <span class="btag">Pune</span>
+                <span class="btag">Chh. Sambhajinagar</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-form-card reveal d2">
+          <h3>Send Us a Message</h3>
+          <form id="contactForm" onsubmit="handleForm(event)">
+            <div class="form-row">
+              <div class="fg"><label>Full Name *</label><input type="text" name="name" placeholder="Your full name" required /></div>
+              <div class="fg"><label>Phone Number *</label><input type="tel" name="phone" placeholder="+91 XXXXX XXXXX" required /></div>
+            </div>
+            <div class="fg"><label>Email Address</label><input type="email" name="email" placeholder="you@company.com" /></div>
+            <div class="fg">
+              <label>Service Required *</label>
+              <select name="service" required>
+                <option value="">Select a service...</option>
+                <option value="security">Security Personnel</option>
+                <option value="manpower">Manpower &amp; Labour Supply</option>
+                <option value="housekeeping">Housekeeping Services</option>
+                <option value="fabrication">Fabrication Services</option>
+                <option value="multiple">Multiple Services</option>
+              </select>
+            </div>
+            <div class="fg"><label>Your Message</label><textarea name="message" placeholder="Tell us about your requirements, headcount, location, duration..."></textarea></div>
+            <button type="submit" class="btn btn-gold" style="width:100%;justify-content:center;font-size:1rem;">
+              Send Message
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+            <div class="form-ok" id="formOk">Message sent! We will get back to you within 24 hours.</div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand"><div class="nav-logo"><div class="logo-hex"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="logo-text-wrap"><div class="lg-main" style="color:var(--white)">DSS Group</div><div class="lg-sub">Defensive Security Services</div></div></div><p>Trusted manpower and security solutions since 2011.</p></div>
+        <div class="footer-col"><h5>Services</h5><a onclick="goPage('services','security')">Security Personnel</a><a onclick="goPage('services','manpower')">Manpower Supply</a><a onclick="goPage('services','housekeeping')">Housekeeping</a><a onclick="goPage('services','fabrication')">Fabrication</a></div>
+        <div class="footer-col"><h5>Company</h5><a onclick="goPage('home')">Home</a><a onclick="goPage('about')">About Us</a><a onclick="goPage('contact')">Contact</a></div>
+        <div class="footer-col"><h5>Offices</h5><a>Nashik (HQ)</a><a>Mumbai</a><a>Pune</a><a>Chh. Sambhajinagar</a></div>
+      </div>
+      <div class="footer-bottom"><p>© 2024 DSS Group. All rights reserved.</p><div class="socials"><div class="soc-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div><div class="soc-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg></div><div class="soc-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></div></div></div>
+    </div>
+  </footer>
+</div><!-- /contact -->
+
+<script>
+// ─── PAGE ROUTING ───
+let currentPage = 'home';
+
+function goPage(name, svcTab) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links button:not(.nav-cta-btn)').forEach(b => b.classList.remove('active'));
+
+  const page = document.getElementById('page-' + name);
+  if (page) page.classList.add('active');
+
+  const nb = document.getElementById('nb-' + name);
+  if (nb) nb.classList.add('active');
+
+  currentPage = name;
+
+  const nav = document.getElementById('mainNav');
+  if (name === 'home') {
+    nav.classList.remove('page-solid');
+    nav.classList.toggle('scrolled', window.scrollY > 30);
+  } else {
+    nav.classList.remove('scrolled');
+    nav.classList.add('page-solid');
+  }
+
+  // Close mobile menu on navigation
+  closeMob();
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (svcTab) setTimeout(() => switchSvc(svcTab), 80);
+  setTimeout(runReveal, 120);
+}
+
+// ─── SERVICE TABS ───
+function switchSvc(name) {
+  document.querySelectorAll('.svc-detail').forEach(d => d.classList.remove('active'));
+  document.querySelectorAll('.stab').forEach(b => b.classList.remove('active'));
+  const d = document.getElementById('sd-' + name);
+  if (d) d.classList.add('active');
+  const tabMap = { security: 0, manpower: 1, housekeeping: 2, fabrication: 3 };
+  const tabs = document.querySelectorAll('.stab');
+  if (tabs[tabMap[name]]) tabs[tabMap[name]].classList.add('active');
+}
+
+// ─── HAMBURGER ───
+let mobOpen = false;
+function toggleMob() {
+  mobOpen = !mobOpen;
+  const menu = document.getElementById('mobMenu');
+  const btn   = document.getElementById('hamburger');
+  menu.classList.toggle('open', mobOpen);
+  btn.classList.toggle('is-open', mobOpen);
+}
+function closeMob() {
+  mobOpen = false;
+  document.getElementById('mobMenu').classList.remove('open');
+  document.getElementById('hamburger').classList.remove('is-open');
+}
+// Close mobile menu when tapping outside
+document.addEventListener('click', e => {
+  if (mobOpen && !e.target.closest('#mobMenu') && !e.target.closest('#hamburger')) {
+    closeMob();
+  }
+});
+
+// ─── SCROLL ANIMATION ───
+function runReveal() {
+  const els = document.querySelectorAll('.page.active .reveal:not(.in)');
+  if (!els.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); observer.unobserve(e.target); } });
+  }, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
+  els.forEach(el => observer.observe(el));
+}
+
+// ─── NAV SCROLL — only matters on home page ───
+window.addEventListener('scroll', () => {
+  if (currentPage !== 'home') return;
+  const nav = document.getElementById('mainNav');
+  nav.classList.toggle('scrolled', window.scrollY > 30);
+}, { passive: true });
+
+// ─── CONTACT FORM ───
+function handleForm(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('[type=submit]');
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+  const data = Object.fromEntries(new FormData(e.target).entries());
+
+  fetch('/api/contact', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  }).catch(() => {}).finally(() => {
+    document.getElementById('formOk').classList.add('show');
+    e.target.reset();
+    btn.innerHTML = 'Send Message <svg viewBox="0 0 24 24" width="18" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
+    btn.disabled = false;
+  });
+}
+
+// ─── INIT ───
+runReveal();
+// Reveal on page load with slight delay so animations fire correctly
+setTimeout(runReveal, 300);
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  const statsSection = document.querySelector(".hero-stats-bar");
+  const counters = document.querySelectorAll(".hero-stat .n");
+  let hasAnimated = false;
+
+  function animateCounters() {
+    counters.forEach(counter => {
+      const target = +counter.getAttribute("data-target");
+      const hasPlus = counter.textContent.includes("+");
+      let count = 0;
+
+      const increment = target / 100;
+
+      const updateCounter = () => {
+        count += increment;
+
+        if (count < target) {
+          counter.textContent = Math.floor(count) + (hasPlus ? "+" : "");
+          requestAnimationFrame(updateCounter);
+        } else {
+          counter.textContent = target + (hasPlus ? "+" : "");
+        }
+      };
+
+      updateCounter();
+    });
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting && !hasAnimated) {
+      animateCounters();
+      hasAnimated = true; // run only once
+    }
+  }, {
+    threshold: 0.5
+  });
+
+  observer.observe(statsSection);
+
+});
+</script>
+</body>
+</html>
