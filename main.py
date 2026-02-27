@@ -145,7 +145,20 @@ async def get_services():
             },
         ]
     }
+from fastapi.responses import FileResponse # Make sure this is imported at the top
 
+# ─── Serve Static Assets ───
+@app.get("/secc.png")
+async def serve_image():
+    """Serve the hero image."""
+    image_path = STATIC_DIR / "secc.png"
+    if not image_path.exists():
+        raise HTTPException(status_code=404, detail="Image not found")
+    return FileResponse(image_path)
+
+# ─── Catch-all for SPA routing ───
+@app.get("/{full_path:path}", response_class=HTMLResponse)
+# ... rest of your code ...
 
 # ─── Catch-all for SPA routing ───
 @app.get("/{full_path:path}", response_class=HTMLResponse)
