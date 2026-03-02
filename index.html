@@ -18,34 +18,35 @@
      ROOT VARIABLES
   ═══════════════════════════════════════ */
 :root {
-  --gold:        #F0B429;
-  --gold-light:  #FFD166;
-  --gold-dark:   #C08600;
+    --gold:        #F0B429;
+    --gold-light:  #FFD166;
+    --gold-dark:   #C08600;
 
-  --dark:        #0B0F1A;
-  --dark-2:      #141928;
-  --dark-3:      #1C2235;
-  --dark-4:      #1E2840;
+    --dark:   #0A1628;
+    --dark-2: #0D1F35;
+    --dark-3: #112440;
+    --dark-4: #162D50;
 
-  --white:       #FFFFFF;
 
-  /* 🔵 Original Light Security Blue Palette */
-  --light:       #EDF2FB;
-  --light-2:     #E2EAF8;
-  --blue-card:   #F4F7FE;
-  --blue-mid:    #D6E4F7;
+    --white:        #FFFFFF;
 
-  --border-dark: rgba(255,255,255,0.08);
-  --border-light:rgba(37,99,235,0.12);
+    /* Security Navy Blue Palette */
+    --light:        #EDF1F7;
+    --light-2:      #E2E8F0;
+    --blue-card:    #F0F4FA;
+    --blue-mid:     #C8D4E8;
 
-  --text-dark:   #0B1220;
-  --text-body:   #354060;
-  --text-muted:  #6B7BA4;
+    --border-dark:  rgba(255,255,255,0.08);
+    --border-light: rgba(10,30,80,0.12);
 
-  --nav-h:       68px;
+    --text-dark:    #0B1220;
+    --text-body:    #2D3A50;
+    --text-muted:   #5A6A84;
 
-  --shadow-card: 0 4px 24px rgba(37,99,235,0.07);
-  --shadow-hover:0 16px 48px rgba(37,99,235,0.13);
+    --nav-h:        68px;
+
+    --shadow-card:  0 4px 24px rgba(10,20,60,0.10);
+    --shadow-hover: 0 16px 48px rgba(10,20,60,0.18);
 }
 
 
@@ -57,7 +58,7 @@
   html { scroll-behavior: smooth; }
   body {
     font-family: 'Outfit', sans-serif;
-    background: var(--light);
+    background: var(--dark);
     color: var(--text-body);
     overflow-x: hidden;
   }
@@ -90,15 +91,15 @@
   }
   /* Once user scrolls any page → solid dark pill */
   nav.scrolled {
-    background: rgba(14,16,24,0.96);
+    background: rgba(10,22,50,0.96);
     box-shadow: 0 1px 0 rgba(255,255,255,0.06), 0 6px 28px rgba(0,0,0,0.4);
     backdrop-filter: blur(18px);
   }
   /* On non-home pages the page starts with a dark hero, so nav
      needs a solid bg right away (no scroll needed) */
   nav.page-solid {
-    background: rgba(14,16,24,0.96);
-    backdrop-filter: blur(18px);
+    background: var(--dark);
+    backdrop-filter: none;
   }
 
   .nav-logo { display:flex; align-items:center; gap:12px; cursor:pointer; }
@@ -814,21 +815,21 @@
     background:var(--blue-card); border:1px solid var(--border-dark);
     border-radius:20px; padding:44px; box-shadow:var(--shadow-hover);
   }
-  .contact-form-card h3 { font-family:'Bebas Neue',sans-serif; font-size:1.8rem; color:var(--white); letter-spacing:0.03em; margin-bottom:28px; }
+  .contact-form-card h3 { font-family:'Bebas Neue',sans-serif; font-size:1.8rem; color:var(--dark); letter-spacing:0.03em; margin-bottom:28px; }
   .form-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
   .fg { margin-bottom:18px; }
   .fg label { display:block; font-size:0.75rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px; }
-  .fg input, .fg select, .fg textarea {
-    width:100%; background:var(--dark-3); border:1.5px solid var(--border-dark);
+.fg input, .fg select, .fg textarea {
+    width:100%; background:#FFFFFF; border:1.5px solid #C8D4E8;
     border-radius:10px; padding:13px 16px;
-    font-family:'Outfit',sans-serif; font-size:0.95rem; color:var(--white);
+    font-family:'Outfit',sans-serif; font-size:0.95rem; color:#0B1220;
     outline:none; transition:border-color 0.2s, box-shadow 0.2s;
     appearance:none; -webkit-appearance:none;
-  }
-  .fg input:focus, .fg select:focus, .fg textarea:focus {
+}
+.fg input:focus, .fg select:focus, .fg textarea:focus {
     border-color:var(--gold); box-shadow:0 0 0 3px rgba(240,180,41,0.12);
-    background:var(--dark-4);
-  }
+    background:#FFFFFF;
+}
   .fg textarea { resize:vertical; min-height:120px; }
   .fg input::placeholder, .fg textarea::placeholder { color:var(--text-muted); }
   .form-ok { display:none; background:rgba(34,197,94,0.07); border:1px solid rgba(34,197,94,0.25); border-radius:10px; padding:16px; text-align:center; color:#4ade80; font-weight:600; margin-top:14px; }
@@ -1006,15 +1007,13 @@
 
 <!-- ─── NAV ─── -->
 <nav id="mainNav">
-  <div class="nav-logo" onclick="goPage('home')">
-    <div class="logo-hex">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-    </div>
+<div class="nav-logo" onclick="goPage('home')" style="display:flex; align-items:center; gap:12px;">
+    <img src="./logo.png" style="height: 100px; width:auto; object-fit:contain;" alt="DSS Logo">
     <div class="logo-text-wrap">
-      <div class="lg-main">DSS Group</div>
-      <div class="lg-sub">Defensive Security Services</div>
+        <div class="lg-main">DSS Group</div>
+        <div class="lg-sub">Defensive Security Services</div>
     </div>
-  </div>
+</div>
   <div class="nav-links">
     <button id="nb-home"     class="active" onclick="goPage('home')">Home</button>
     <button id="nb-about"    onclick="goPage('about')">About Us</button>
@@ -1833,3 +1832,11 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
