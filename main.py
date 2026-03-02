@@ -156,6 +156,14 @@ async def serve_image():
         raise HTTPException(status_code=404, detail="Image not found")
     return FileResponse(image_path)
 
+@app.get("/logo.png")
+async def serve_image():
+    """Serve the hero image."""
+    image_path = STATIC_DIR / "logo.png"
+    if not image_path.exists():
+        raise HTTPException(status_code=404, detail="Image not found")
+    return FileResponse(image_path)
+
 # ─── Catch-all for SPA routing ───
 @app.get("/{full_path:path}", response_class=HTMLResponse)
 # ... rest of your code ...
